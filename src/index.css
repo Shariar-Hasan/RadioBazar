@@ -18,4 +18,16 @@ html {
   .site-special-text {
     @apply bg-gradient-to-r from-blue-300 via-violet-800 to-indigo-600  text-transparent bg-clip-text;
   }
+  .spinner {
+    animation: spin 3s infinite linear;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

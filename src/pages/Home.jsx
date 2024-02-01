@@ -2,15 +2,16 @@
 import { useEffect, useState } from "react";
 import SearchText from "../components/SearchText";
 import Card from "../components/Card";
-import api from "../assets/RadioApiProvider";
 import { IoSettings } from "react-icons/io5";
 import AudioPlayer from "../components/AudioPlayer";
+import { RadioBrowserApi } from "radio-browser-api";
 
 const Home = () => {
     const [stations, setStations] = useState();
 
     // new states
     const [selectedRadioStation, setSelectedRadioStation] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [countryList, setCountryList] = useState([])
     const [searchedText, setSearchedText] = useState("")
 
@@ -36,16 +37,21 @@ const Home = () => {
 
     const getStationsByCountries = async (countryCode) => {
         // query stations by country code and limit to first 100 stations
+        setIsLoading(true)
         try {
+            const api = new RadioBrowserApi(fetch.bind(window), "Radio Bazar");
             const newStations = await api.searchStations({
                 // language: "english",
                 countryCode: countryCode,
-                limit: 100,
+                limit: 1000,
                 offset: 0 // this is the default - can be omited
             })
             setStations(newStations)
         } catch (e) {
-            console.log(e.message);
+            console.log(e.message, e);
+        }
+        finally {
+            setIsLoading(false)
         }
     }
 
@@ -58,7 +64,7 @@ const Home = () => {
                 <span className="stylish-font">Radio Bazar</span>
             </div>
             <div className="">
-                <div className="relative max-w-[400px] mx-auto flex justify-center py-4 mb-5 z-10 items-center">
+                <div className="relative max-w-[450px] mx-auto flex justify-center py-4 mb-5 z-10 items-center">
                     <SearchText
                         searchedText={searchedText}
                         setSearchedText={setSearchedText}
@@ -68,9 +74,7 @@ const Home = () => {
                             setSearchedText(country.name)
                         }}
                     />
-                    <div>
-                        <IoSettings />
-                    </div>
+                    {isLoading && <span className=" absolute top-[50%] left-full translate-y-[-50%] w-[20px] aspect-square border-2 border-violet-700 border-b-transparent rounded-full animate-spin"></span>}
                 </div>
             </div>
             <div className="text-center">
@@ -90,15 +94,6 @@ const Home = () => {
                         );
                     })}
             </div>
-            {/* <div className="bg-blue-500 fixed bottom-0 mt-2 w-full">
-                <div className="mx-auto w-[400px]">
-                    <audio
-                        autoPlay
-                        className="player w-full"
-                        src={selectedRadioStation.urlResolved}
-                    />
-                </div>
-            </div> */}
         </div >
     )
 }

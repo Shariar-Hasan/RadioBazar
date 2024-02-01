@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const SearchText = ({
-    searchedText = "",
+    searchedText = "Bangladesh",
     setSearchedText,
     countryList = [],
     onSelect = () => { }
@@ -17,7 +17,7 @@ const SearchText = ({
     return (
         <>
             <input
-                placeholder="search by country"
+                placeholder="Search Country Name"
                 type="text"
                 value={searchedText}
                 className="px-4 py-2 w-full bg-gray-800 rounded-full"
