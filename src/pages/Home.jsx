@@ -4,12 +4,13 @@ import SearchText from "../components/SearchText";
 import Card from "../components/Card";
 import api from "../assets/RadioApiProvider";
 import { IoSettings } from "react-icons/io5";
+import AudioPlayer from "../components/AudioPlayer";
 
 const Home = () => {
     const [stations, setStations] = useState();
 
     // new states
-    const [selectedRadioStation, setSelectedRadioStation] = useState("")
+    const [selectedRadioStation, setSelectedRadioStation] = useState(null)
     const [countryList, setCountryList] = useState([])
     const [searchedText, setSearchedText] = useState("")
 
@@ -37,7 +38,7 @@ const Home = () => {
         // query stations by country code and limit to first 100 stations
         try {
             const newStations = await api.searchStations({
-                language: "english",
+                // language: "english",
                 countryCode: countryCode,
                 limit: 100,
                 offset: 0 // this is the default - can be omited
@@ -50,6 +51,7 @@ const Home = () => {
 
     return (
         <div className="container mx-auto">
+            <AudioPlayer station={selectedRadioStation} />
             <div className="mb-3 mt-5 pt-2 text-center text-6xl font-bold site-special-text">
                 <span className="bangla-font">রেডিও বাজার</span>
                 <span>/</span>
@@ -67,7 +69,7 @@ const Home = () => {
                         }}
                     />
                     <div>
-                    <IoSettings />
+                        <IoSettings />
                     </div>
                 </div>
             </div>
@@ -78,7 +80,7 @@ const Home = () => {
                 {stations &&
                     stations?.map((station) => {
                         return (
-                            <div className="col-span-1 mx-auto" key={station?.id}>
+                            <div className="col-span-1" key={station?.id}>
                                 <Card
                                     station={station}
                                     setSelectedRadioStation={setSelectedRadioStation}
@@ -88,7 +90,7 @@ const Home = () => {
                         );
                     })}
             </div>
-            <div className="bg-blue-500 fixed bottom-0 mt-2 w-full">
+            {/* <div className="bg-blue-500 fixed bottom-0 mt-2 w-full">
                 <div className="mx-auto w-[400px]">
                     <audio
                         autoPlay
@@ -96,7 +98,7 @@ const Home = () => {
                         src={selectedRadioStation.urlResolved}
                     />
                 </div>
-            </div>
+            </div> */}
         </div >
     )
 }
