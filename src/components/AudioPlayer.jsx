@@ -229,14 +229,17 @@ const AudioPlayer = ({ station }) => {
 
                 </div>
             </div>
-            <button
-                className={`text-4xl bg-gray-200/50 p-3 rounded-full fixed bottom-[10px] right-[10px] text-violet-900 origin-center duration-200 transition-all z-[101] ${isPoppedUp ? " opacity-0 invisible" : " opacity-100 visible spinner"}`}
-                onClick={() => {
-                    setIsPoppedUp(true)
-                }}
-            >
-                <FaRadio />
-            </button>
+            {
+                !isPoppedUp && isPlaying && <button
+                    className={`text-4xl bg-gray-200/50 p-3 rounded-full fixed bottom-[10px] right-[10px] text-violet-900 origin-center duration-200 transition-all z-[101] ${isPoppedUp ? " opacity-0 invisible" : " opacity-100 visible spinner"}`}
+                    onClick={() => {
+                        setIsPoppedUp(true)
+                    }}
+                >
+                    <FaRadio />
+                </button >
+            }
+
         </>
     )
 }
