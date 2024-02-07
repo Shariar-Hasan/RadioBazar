@@ -5,6 +5,7 @@ import Card from "../components/Card";
 import { IoSettings } from "react-icons/io5";
 import AudioPlayer from "../components/AudioPlayer";
 import { RadioBrowserApi } from "radio-browser-api";
+import GithubStar from "../components/GithubStar";
 
 const Home = () => {
     const [stations, setStations] = useState();
@@ -76,6 +77,7 @@ const Home = () => {
                     />
                     {isLoading && <span className=" absolute top-[50%] left-full translate-y-[-50%] w-[20px] aspect-square border-2 border-violet-700 border-b-transparent rounded-full animate-spin"></span>}
                 </div>
+                <GithubStar />
             </div>
             <div className="text-center">
                 <span>{stations?.length} Available Channel</span>
